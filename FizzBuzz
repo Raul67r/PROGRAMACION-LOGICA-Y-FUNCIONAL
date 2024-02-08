@@ -1,0 +1,42 @@
+module Main where
+ifThenElse :: Bool -> a -> a -> a
+ifThenElse cond thenVal elseVal =
+    case cond of
+        True -> thenVal
+        False -> elseVal
+
+fizzbuzz :: Int -> String
+fizzbuzz n
+    | n `mod` 3 == 0 && n `mod` 5 == 0 = "FizzBuzz!"
+    | n `mod` 3 == 0 = "Buzz!"
+    | n `mod` 5 == 0 = "Fizz!"
+    | n >= 1 && n < 100 = number n
+    | otherwise = "Number out of range"
+
+number :: Int -> String
+number n
+    | n `mod` 10 == 0 && n < 100 = tens (n `div` 10)
+    | n < 100 = tens (n `div` 10) ++ " " ++ lessThan20 (n `mod` 10)
+    | n == 100 = "One Hundred!"
+    | otherwise = "Number out of range"
+
+lessThan20 :: Int -> String
+lessThan20 n
+    | n > 0 && n < 20 =
+        let answers = words ("one two three four five six seven eight nine ten " ++
+                             "eleven twelve thirteen fourteen fifteen sixteen " ++
+                             "seventeen eighteen nineteen")
+        in answers !! (n - 1)
+    | otherwise = "Number out of range"
+
+tens :: Int -> String
+tens n
+    | n >= 2 && n <= 9 =
+        answers !! (n - 2)
+    | otherwise = "Number out of range"
+    where
+        answers = words "twenty thirty forty fifty sixty seventy eighty ninety"
+
+main :: IO ()
+main = putStrLn (fizzbuzz 9)
+
