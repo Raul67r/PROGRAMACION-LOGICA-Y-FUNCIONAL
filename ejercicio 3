@@ -1,0 +1,10 @@
+lengthWords :: String -> [(String, Int)]
+lengthWords sentence = [(word, length word) | word <- words sentence]
+
+main :: IO ()
+main = do
+    putStrLn "Enter a sentence:"
+    input <- getLine
+    let result = lengthWords input
+    putStrLn "Word lengths:"
+    mapM_ (\(word, len) -> putStrLn $ word ++ ": " ++ show len) result
