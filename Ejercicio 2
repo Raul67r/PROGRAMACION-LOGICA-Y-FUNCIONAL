@@ -1,0 +1,15 @@
+applyFunctionToList :: (a -> b) -> [a] -> [b]
+applyFunctionToList f lst = map f lst
+
+main :: IO ()
+main = do
+    input <- getLine
+    let numbers = map read (words input) :: [Int]
+    functionName <- getLine
+    let selectedFunction = case functionName of
+                            "negate" -> negate
+                            "square" -> (^2)
+                            _        -> error "Unsupported function"
+    
+    let result = applyFunctionToList selectedFunction numbers
+    print result
