@@ -1,0 +1,32 @@
+type Precio = Double
+type Producto = (String, Precio)
+type Porcentaje = Double
+
+
+aplicarDescuento :: Porcentaje -> Precio -> Precio
+aplicarDescuento descuento precio = precio - (precio * descuento / 100)
+
+
+aplicarIVA :: Porcentaje -> Precio -> Precio
+aplicarIVA iva precio = precio + (precio * iva / 100)
+
+
+precioFinalCesta :: [Producto] -> Porcentaje -> (Precio -> Precio -> Precio) -> Precio
+precioFinalCesta [] _ _ = 0
+precioFinalCesta ((_, precio):resto) porcentaje funcion =
+    let precioConDescuento = funcion porcentaje precio
+    in precioConDescuento + precioFinalCesta resto porcentaje funcion
+
+
+cestaDeCompra :: [Producto]
+cestaDeCompra = [("Leche", 1.20), ("Pan", 0.80), ("Queso", 3.50)]
+
+main :: IO ()
+main = do
+    let descuento = 10 
+        precioFinalConDescuento = precioFinalCesta cestaDeCompra descuento aplicarDescuento
+    putStrLn $ "Precio final de la cesta con descuento: " ++ show precioFinalConDescuento
+
+    let iva = 21 
+        precioFinalConIVA = precioFinalCesta cestaDeCompra iva aplicarIVA
+    putStrLn $ "Precio final de la cesta con IVA: " ++ show precioFinalConIVA
