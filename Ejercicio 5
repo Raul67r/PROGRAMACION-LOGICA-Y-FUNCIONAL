@@ -1,0 +1,14 @@
+type Vector = [Double]
+
+vectorMagnitude :: Vector -> Double
+vectorMagnitude vector = sqrt (sum (map (^2) vector))
+
+main :: IO ()
+main = do
+
+    input <- getLine
+    let vector = map read (words input) :: Vector
+    
+    let magnitude = vectorMagnitude vector
+    
+    putStrLn $ "El vector es: " ++ show magnitude
