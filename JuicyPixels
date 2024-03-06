@@ -1,0 +1,11 @@
+import Codec.Picture
+
+main :: IO ()
+main = do
+    result <- readImage "path/to/your/image.png"
+    case result of
+        Left err -> putStrLn err
+        Right dynamicImg -> do
+            let img = convertRGB8 dynamicImg -- Convertir a RGB8 si es necesario
+            -- Aquí puedes procesar img o guardarla usando writePng, por ejemplo.
+            writePng "path/to/your/output.png" img
