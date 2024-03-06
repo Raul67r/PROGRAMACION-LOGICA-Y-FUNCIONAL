@@ -1,0 +1,48 @@
+import Graphics.UI.GLUT
+
+-- Función para dibujar el personaje
+drawCharacter :: IO ()
+drawCharacter = do
+    -- Limpiamos la pantalla y establecemos el color
+    clear [ColorBuffer]
+    color $ Color3 1.0 1.0 (1.0 :: GLfloat) -- Blanco
+
+    -- Dibujamos la cabeza (un círculo)
+    renderPrimitive Points $ do
+        pointSize 50
+        vertex $ Vertex2 0.0 0.0
+
+    -- Dibujamos el cuerpo (línea vertical)
+    renderPrimitive Lines $ do
+        vertex $ Vertex2 0.0 0.0
+        vertex $ Vertex2 0.0 (-100.0)
+
+    -- Dibujamos el brazo izquierdo (línea diagonal)
+    renderPrimitive Lines $ do
+        vertex $ Vertex2 0.0 (-50.0)
+        vertex $ Vertex2 (-50.0) (-100.0)
+
+    -- Dibujamos el brazo derecho (línea diagonal)
+    renderPrimitive Lines $ do
+        vertex $ Vertex2 0.0 (-50.0)
+        vertex $ Vertex2 50.0 (-100.0)
+
+    -- Hacemos que los dibujos aparezcan en pantalla
+    flush
+
+-- Función principal
+main :: IO ()
+main = do
+    -- Inicializamos GLUT y creamos la ventana
+    (_progName, _args) <- getArgsAndInitialize
+    _window <- createWindow "Personaje de Anime"
+    
+    -- Establecemos el tamaño de la ventana y la posición de la vista
+    windowSize $= Size 400 400
+    viewport $= (Position 0 0, Size 400 400)
+    
+    -- Establecemos la función de dibujo
+    displayCallback $= drawCharacter
+    
+    -- Iniciamos el bucle de eventos de GLUT
+    mainLoop
