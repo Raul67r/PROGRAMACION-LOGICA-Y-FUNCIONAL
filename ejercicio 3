@@ -1,0 +1,19 @@
+clasificarCalificaciones :: [Int] -> [String]
+clasificarCalificaciones calificaciones = map clasificar calificaciones
+  where
+    clasificar nota
+      | nota >= 95 = "Excelente"
+      | nota >= 85 = "Notable"
+      | nota >= 75 = "Bueno"
+      | nota >= 70 = "Suficiente"
+      | otherwise  = "Desempeño insuficiente"
+
+-- Ejemplo de uso
+main :: IO ()
+main = do
+  let calificaciones = [92, 78, 88, 63, 97, 72, 84]
+  let clasificaciones = clasificarCalificaciones calificaciones
+  putStrLn "Calificaciones: "
+  print calificaciones
+  putStrLn "Clasificaciones correspondientes: "
+  print clasificaciones

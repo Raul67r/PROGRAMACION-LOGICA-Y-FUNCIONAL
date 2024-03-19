@@ -1,0 +1,33 @@
+data Inmueble = Inmueble { 
+    año :: Int,
+    metros :: Int,
+    habitaciones :: Int,
+    garaje :: Bool,
+    zona :: Char
+} deriving (Show)
+
+calcularPrecio :: Inmueble -> Double
+calcularPrecio inmueble
+  | zona inmueble == 'A' = precioBase * (1 - fromIntegral (año inmueble) / 100)
+  | zona inmueble == 'B' = precioBase * (1 - fromIntegral (año inmueble) / 100) * 1.5
+  | otherwise = 0
+  where
+    precioBase = fromIntegral (metros inmueble * 1000 + habitaciones inmueble * 5000 + if garaje inmueble then 15000 else 0)
+
+buscarPorPresupuesto :: [Inmueble] -> Double -> [Inmueble]
+buscarPorPresupuesto inmuebles presupuesto = filter (\inmueble -> calcularPrecio inmueble <= presupuesto) inmuebles
+
+main :: IO ()
+main = do
+  let listaInmuebles = [ Inmueble 2000 100 3 True 'A',
+                         Inmueble 2012 60 2 True 'B',
+                         Inmueble 1980 120 4 False 'A',
+                         Inmueble 2005 75 3 True 'B',
+                         Inmueble 2015 90 2 False 'A' ]
+
+  let presupuesto = 100000 -- Puedes cambiar este valor según tu presupuesto
+
+  let inmueblesFiltrados = buscarPorPresupuesto listaInmuebles presupuesto
+
+  putStrLn "Inmuebles filtrados por presupuesto: "
+  print inmueblesFiltrados

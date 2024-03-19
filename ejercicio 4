@@ -1,0 +1,25 @@
+module Main where
+
+import Data.Char (toUpper)
+
+type Asignatura = String
+type Nota = Int
+type RegistroNotas = [(Asignatura, Nota)]
+type RegistroCalificaciones = [(Asignatura, String)]
+
+calificarAsignaturas :: RegistroNotas -> RegistroCalificaciones
+calificarAsignaturas = map (\(asignatura, nota) -> (map toUpper asignatura, calificar nota))
+  where
+    calificar :: Nota -> String
+    calificar nota
+      | nota >= 95 && nota <= 100 = "Excelente"
+      | nota >= 85 && nota <= 94  = "Notable"
+      | nota >= 75 && nota <= 84  = "Bueno"
+      | nota >= 70 && nota <= 74  = "Suficiente"
+      | otherwise                 = "Desempeño insuficiente"
+
+main :: IO ()
+main = do
+    let registroNotas = [("Matemáticas", 80), ("Historia", 78), ("Ciencias", 100)]
+        registroCalificaciones = calificarAsignaturas registroNotas
+    mapM_ (\(asignatura, calificacion) -> putStrLn (asignatura ++ ": " ++ calificacion)) registroCalificaciones

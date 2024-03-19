@@ -1,0 +1,14 @@
+filtrarLista :: (a -> Bool) -> [a] -> [a]
+filtrarLista _ [] = []
+filtrarLista f (x:xs)
+  | f x       = x : filtrarLista f xs
+  | otherwise = filtrarLista f xs
+
+main :: IO ()
+main = do
+  let listaOriginal = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+  let listaFiltrada = filtrarLista (\x -> x > 5) listaOriginal
+  putStrLn "Lista original: "
+  print listaOriginal
+  putStrLn "Lista filtrada (elementos mayores que 5): "
+  print listaFiltrada
